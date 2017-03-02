@@ -6,7 +6,10 @@ Use App\Quote;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\facades\Input;
+use Illuminate\Support\Facades\Hash;
 
+use Tymon\JWTAuth\Exceptions\JWTException;
+use JWTAuth;
 class UserController extends Controller
 {
     /**
@@ -51,7 +54,7 @@ class UserController extends Controller
         $username = $request->input('username');
         $email = $request->input('email');
         $password = $request->input('password');
-        $u = User::create(['name'=>$username,'email'=>$email,'password'=>$password]);
+        $u = User::create(['name'=>$username,'email'=>$email,'password'=>bcrypt($password)]);
         return  response()->json($u, 201);
     }
 
@@ -98,5 +101,32 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function signin(Request $request)
+    {
+         $rules = [
+            'email' => 'required|email',
+            'password'=>'required|min:6'
+
+        ];
+        $validator = Validator::make(Input::all(),$rules);
+        if($validator->fails()){
+            return $validator->messages();
+        }
+        $credentials = ['email'=> $request->input('email'),
+                        'password'=> ($request->input('password'))
+                         ];
+
+        try{
+            if(! $token=JWTAuth::attempt($credentials)){
+                return response()->json(['msg'=>'Authentication Failed'],401);
+            }
+        }catch(JWTException $e){
+            return response()->json(['msg'=>'Error Occured'],500);
+
+        }
+        return response()->json($token);
+
     }
 }
