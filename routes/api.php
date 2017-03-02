@@ -24,7 +24,7 @@ POST 	/api/user			==> Add new user    Done
 =========================================
 GET 	/api/quote			==> List All Quotes              Done
 GET		/api/quote/id		==> Detail of Quote with id      Done
-POST 	/api/quote			==> Add New Qoute               
+POST 	/api/quote			==> Add New Qoute                Done 
 DELETE	/api/quote/id		==> Delete Quote with id
 
 */
