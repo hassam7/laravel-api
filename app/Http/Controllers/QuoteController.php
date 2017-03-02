@@ -99,7 +99,9 @@ class QuoteController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $q = Quote::findOrFail($id);
+        $q->delete();
+        return $q;
     }
     public function quoteById($id)
     {
