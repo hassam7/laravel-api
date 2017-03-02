@@ -51,8 +51,8 @@ class UserController extends Controller
         $username = $request->input('username');
         $email = $request->input('email');
         $password = $request->input('password');
-
-        return ['username'=>$username,'email'=>$email,'password'=>$password];
+        $u = User::create(['name'=>$username,'email'=>$email,'password'=>$password]);
+        return  response()->json($u, 201);
     }
 
     /**
