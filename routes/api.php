@@ -28,6 +28,7 @@ POST 	/api/quote			==> Add New Qoute                Done
 DELETE	/api/quote/id		==> Delete Quote with id
 
 */
+Route::post('user/signin','UserController@signin');
 Route::resource('user', 'UserController');
 Route::get('quote/{id}', 'QuoteController@quoteById');
 Route::resource('quote', 'QuoteController');
