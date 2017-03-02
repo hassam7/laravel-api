@@ -126,7 +126,7 @@ class UserController extends Controller
             return response()->json(['msg'=>'Error Occured'],500);
 
         }
-        return response()->json($token);
+        return response()->json(['token'=>$token]);
 
     }
 }
