@@ -102,7 +102,12 @@ class UserController extends Controller
     {
         //
     }
-
+    public function refresh()
+    {
+        $current_token  = JWTAuth::getToken();
+        $token          = JWTAuth::refresh($current_token);
+        return response()->json($token, 200);
+    }
     public function signin(Request $request)
     {
          $rules = [
@@ -128,5 +133,11 @@ class UserController extends Controller
         }
         return response()->json(['token'=>$token]);
 
+    }
+    public function signout(Request $request)
+    {
+        $token = $request->input('token');
+        JWTAuth::setToken($token)->invalidate();
+        return ['message'=>'Logged Out'];
     }
 }
