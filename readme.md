@@ -1,6 +1,6 @@
 # About Laravel
 
-A small project to learn how to implement restful services with authentication using laravel framework.
+A small project to learn how to implement restful LIKE services with authentication using laravel framework.
 
 ## Crud Operations.
 
