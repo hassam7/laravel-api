@@ -29,6 +29,8 @@ DELETE	/api/quote/id		==> Delete Quote with id
 
 */
 Route::post('user/signin','UserController@signin');
+Route::get('user/refresh','UserController@refresh');
+Route::get('user/signout','UserController@signout');//does not actually signout, blacklist token till it expires
 Route::resource('user', 'UserController');
 Route::get('quote/{id}', 'QuoteController@quoteById');
 Route::resource('quote', 'QuoteController');
