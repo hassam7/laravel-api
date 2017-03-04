@@ -118,6 +118,9 @@ class QuoteController extends Controller
     }
     public function quoteById($id)
     {
-        return response()->json(Quote::find($id),200);
+        if(! $user=JWTAuth::parseToken()->authenticate()){
+            return response()->json(['msg'=>'Invalid User'],404);
+        }
+        return response()->json(User::findOrFail($user->id)->quotes()->findOrFail($id),200);
     }
 }
