@@ -108,7 +108,11 @@ class QuoteController extends Controller
      */
     public function destroy($id)
     {
-        $q = Quote::findOrFail($id);
+        if(! $user=JWTAuth::parseToken()->authenticate()){
+            return response()->json(['msg'=>'Invalid User'],404);
+        }
+        
+        $q = User::findOrFail($user->id)->quotes()->findOrFail($id);
         $q->delete();
         return $q;
     }
