@@ -42,11 +42,12 @@ class QuoteController extends Controller
         $rules = [
             'quote_text' => 'required',
             'author_text'=> 'required',
-            'user_id'=>'required'
 
         ];
      
-
+        if(! $user=JWTAuth::parseToken()->authenticate()){
+            return response()->json(['msg'=>'Invalid User'],404);
+        }
 
         $validator = Validator::make(Input::all(),$rules);
         if($validator->fails()){
@@ -55,7 +56,7 @@ class QuoteController extends Controller
         
         $quote_text  =  $request->input('quote_text');
         $author_text =  $request->input('author_text');
-        $user_id     =  $request->input('user_id');
+        $user_id     =  $user->id;
 
         $q = new Quote();
         $q->quote_text = $quote_text;
