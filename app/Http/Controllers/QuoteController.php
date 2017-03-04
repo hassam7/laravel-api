@@ -6,6 +6,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Input;
+use JWTAuth;
 
 
 class QuoteController extends Controller
@@ -22,7 +23,10 @@ class QuoteController extends Controller
     public function index()
     {
         //
-        return Quote::get();
+        if(! $user=JWTAuth::parseToken()->authenticate()){
+            return response()->json(['msg'=>'Invalid User'],404);
+        }
+        return User::findOrFail($user->id)->quotes;
     }
 
 
